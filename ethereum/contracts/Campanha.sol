@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.4.25;
+pragma solidity ^0.8.23;
 
 contract CampanhaFactory {
     address[] public deployedCampaigns;
@@ -35,7 +35,7 @@ contract Campanha {
         _;
     }
 
-    constructor(uint minimum, address creator) public {
+    constructor(uint minimum, address creator) {
         manager = creator;
         minimumContribution = minimum;
     }
@@ -51,13 +51,12 @@ contract Campanha {
         uint val,
         address rec
     ) public restricted {
-        Request memory newRequest;
+        Request storage newRequest = requests.push();
         newRequest.description = desc;
         newRequest.value = val;
         newRequest.recipient = rec;
         newRequest.complete = false;
         newRequest.approvalCount = 0;
-        requests.push(newRequest);
     }
 
     function approveRequest(uint index) public {
@@ -76,7 +75,7 @@ contract Campanha {
         require(request.approvalCount > (approversCount / 2));
         require(!request.complete);
 
-        request.recipient.transfer(request.value);
+        payable(request.recipient).transfer(request.value);
         request.complete = true;
     }
 }
