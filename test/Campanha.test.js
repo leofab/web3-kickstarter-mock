@@ -43,16 +43,16 @@ describe('Tests if the contract is correctly loaded', () => {
             campanhaFactoryContract = JSON.parse(dataFactory);
 
             factory = await new web3.eth.Contract(campanhaFactoryContract.abi)
-                .deploy({ data: campanhaFactoryContract.evm.deployedBytecode.object })
-                .send({ from: accounts[0], gas: '1000000' });
+                .deploy({ data: '0x' + campanhaFactoryContract.evm.deployedBytecode.object })
+                .send({ from: accounts[0], gas: '1000000', gasPrice: '5000000000' });
 
             const transactionReceipt = await factory.deployed();
             console.log('Contract deployed at:', transactionReceipt.contractAddress);
 
-            factory.methods.createCampanha('100').send({
+            await factory.methods.createCampanha('100').send({
                 from: accounts[0], gas: '1000000'
             });
-            campanhaAddress = factory.methods.getDeployedCampaigns().call({ from: accounts[0] });
+            campanhaAddress = await factory.methods.getDeployedCampaigns().call({ from: accounts[0] });
             campanha = await new web3.eth.Contract(campanhaContract.abi, campanhaAddress);
             console.log(factory.options.address.object);
         } catch (error) {
@@ -70,8 +70,6 @@ describe('Tests if the contract is correctly loaded', () => {
         assert.ok(campanhaFactoryContract.abi); // Verify if the contract object is correctly loaded
         assert.ok(campanhaContract.abi);
     });
-
-
     // it('deploys a factory and a campanha', () => {
     //     assert.ok(factory);
     //     assert.ok(campanha);
