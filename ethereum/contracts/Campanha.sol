@@ -1,15 +1,15 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.23;
+pragma solidity >=0.5.0 <0.9.0;
 
 contract CampanhaFactory {
-    address[] public deployedCampaigns;
+    Campanha[] public deployedCampaigns;
 
-    function createCampanha(uint minimum) public {
-        address newCampaign = address(new Campanha(minimum, msg.sender));
+    function createCampanha(uint256 minimum) public {
+        Campanha newCampaign = new Campanha(minimum, msg.sender);
         deployedCampaigns.push(newCampaign);
     }
 
-    function getDeployedCampaigns() public view returns (address[] memory) {
+    function getDeployedCampaigns() public view returns (Campanha[] memory) {
         return deployedCampaigns;
     }
 }
@@ -17,41 +17,48 @@ contract CampanhaFactory {
 contract Campanha {
     struct Request {
         string description;
-        uint value;
+        uint256 value;
         address recipient;
         bool complete;
+        uint256 approvalCount;
         mapping(address => bool) approvals;
-        uint approvalCount;
     }
 
-    Request[] public requests;
     address public manager;
-    uint public minimumContribution;
+    uint256 public minimumContribution;
     mapping(address => bool) public contributers;
-    uint public approversCount;
+    uint256 public approversCount;
+    uint256 numRequests;
+    mapping(uint256 => Request) public requestList;
 
-    modifier restricted() {
-        require(msg.sender == manager);
-        _;
-    }
-
-    constructor(uint minimum, address creator) {
+    constructor(uint256 minimum, address creator) {
         manager = creator;
         minimumContribution = minimum;
     }
 
+    modifier restricted() {
+        require(
+            msg.sender == manager,
+            "Only the campaign manager can call this function."
+        );
+        _;
+    }
+
     function contribute() public payable {
-        require(msg.value > minimumContribution);
+        require(
+            msg.value >= minimumContribution,
+            "A minimum contribution is required"
+        );
         contributers[msg.sender] = true;
         approversCount++;
     }
 
     function createRequest(
         string memory desc,
-        uint val,
+        uint256 val,
         address rec
     ) public restricted {
-        Request storage newRequest = requests.push();
+        Request storage newRequest = requestList[numRequests++];
         newRequest.description = desc;
         newRequest.value = val;
         newRequest.recipient = rec;
@@ -59,23 +66,50 @@ contract Campanha {
         newRequest.approvalCount = 0;
     }
 
-    function approveRequest(uint index) public {
-        Request storage requester = requests[index];
+    function approveRequest(uint256 index) public {
+        Request storage requester = requestList[index];
 
-        require(contributers[msg.sender], "Sender is not a contributer");
-        require(!requester.approvals[msg.sender]);
+        require(
+            contributers[msg.sender],
+            "Only contributors can approve a specific payment request"
+        );
+        require(
+            !requester.approvals[msg.sender],
+            "You have already voted to approve this request"
+        );
 
         requester.approvals[msg.sender] = true;
         requester.approvalCount++;
     }
 
-    function finalizeRequest(uint index) public restricted {
-        Request storage request = requests[index];
+    function finalizeRequest(uint256 index) public restricted {
+        Request storage request = requestList[index];
 
-        require(request.approvalCount > (approversCount / 2));
-        require(!request.complete);
+        require(
+            request.approvalCount > (approversCount / 2),
+            "This request needs more approvals before it can be finalized"
+        );
+        require(!request.complete, "This request has already been finalized");
 
         payable(request.recipient).transfer(request.value);
         request.complete = true;
+    }
+
+    function getSummary()
+        public
+        view
+        returns (uint256, uint256, uint256, uint256, address)
+    {
+        return (
+            minimumContribution,
+            address(this).balance,
+            numRequests,
+            approversCount,
+            manager
+        );
+    }
+
+    function getRequestsCount() public view returns (uint256) {
+        return numRequests;
     }
 }
