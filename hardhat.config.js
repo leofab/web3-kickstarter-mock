@@ -16,7 +16,7 @@ module.exports = {
     ],
   },
   paths: {
-    sources: "./ethereum/contracts",
-    artifacts: "./ethereum/build",
+    sources: "./contracts",
+    artifacts: "./build",
   },
 };

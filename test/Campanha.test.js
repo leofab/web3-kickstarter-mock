@@ -1,115 +1,38 @@
-const assert = require('assert');
-const ganache = require('ganache');
-const { Web3 } = require('web3');
-const web3 = new Web3(ganache.provider()); // ganache.provider() is a provider that connects to the ganache network 
-const fs = require('fs-extra');
+const { ethers } = require('hardhat');
+const { assert } = require('chai');
 
-let accounts;
-let factory;
-let campanhaAddress;
-let campanha;
-
-describe('Tests if the contract is correctly loaded', () => {
-    let campanhaFactoryContract;
-    let campanhaContract;
-
-    before(() => {
-        const filePath = '/home/pc/Área\ de\ Trabalho/kickstart-mock/ethereum/build/CampanhaFactory.json';
-        try {
-            const data = fs.readFileSync(filePath, 'utf8');
-            campanhaFactoryContract = JSON.parse(data);
-            // console.log(campanhaFactoryContract); // Verify if the contract object is correctly loaded  
-        } catch (err) {
-            console.error('Error reading file:', err);
-        }
-    });
-
-    before(() => {
-        const filePath = '/home/pc/Área\ de\ Trabalho/kickstart-mock/ethereum/build/Campanha.json';
-        try {
-            const data = fs.readFileSync(filePath, 'utf8');
-            campanhaContract = JSON.parse(data);
-            // console.log(campanhaContract); // Verify if the contract object is correctly loaded  
-        } catch (err) {
-            console.error('Error reading file:', err);
-        }
-    });
-
-    // before(async () => {
-    //     accounts = await web3.eth.getAccounts();
-
-    //     factory = await new web3.eth.Contract(campanhaFactoryContract.abi)
-    //         .deploy({ data: campanhaFactoryContract.deployedBytecode })
-    //         .send({ from: accounts[0], gas: '1000000' });
-
-    //     await factory.methods.createCampanha('100').send({
-    //         from: accounts[0],
-    //         gas: '1000000'
-    //     });
-
-    //     [campanhaAddress] = await factory.methods.getDeployedCampaigns().call();
-    //     campanha = await new web3.eth.Contract(
-    //         campanhaContract.abi),
-    //         campanhaAddress;
-    // });
-
-    // before(async () => {
-    //     accounts = await web3.eth.getAccounts();
-    //     console.log(accounts[0]);
-
-    //     const dataFactory = fs.readFileSync('/home/pc/Área de Trabalho/kickstart-mock/ethereum/build/CampanhaFactory.json', 'utf8');
-    //     campanhaFactoryContract = JSON.parse(dataFactory);
-
-    //     factory = await new web3.eth.Contract(campanhaFactoryContract.abi)
-    //         .deploy({ data: campanhaFactoryContract.evm.deployedBytecode.object })
-    //         .send({ from: accounts[0], gas: '1000000' });
-
-    //     factory.methods.createCampanha('100').send({
-    //         from: accounts[0], gas: '1000000'
-    //     });
-
-    //     campanhaAddress = factory.methods.getDeployedCampaigns().call();
-    //     campanha = await new web3.eth.Contract(campanhaContract.abi, campanhaAddress);
-    // });
+describe('Tests if the contract is correctly loaded', function () {
+    let CampanhaFactory;
+    let Campanha;
+    let campanhaFactory;
+    let campanha;
 
     before(async () => {
-        accounts = await web3.eth.getAccounts();
+        // Load the contracts via Hardhat's artifacts
+        CampanhaFactory = await ethers.getContractFactory('CampanhaFactory');
+        Campanha = await ethers.getContractFactory('Campanha');
 
-        try {
-            const dataFactory = fs.readFileSync('/home/pc/Área de Trabalho/kickstart-mock/ethereum/build/CampanhaFactory.json', 'utf8');
-            campanhaFactoryContract = JSON.parse(dataFactory);
+        // Deploy the contracts using Hardhat's deployment functions
+        campanhaFactory = await CampanhaFactory.deploy();
+        await campanhaFactory.deployed();
 
-            factory = await new web3.eth.Contract(campanhaFactoryContract.abi)
-                .deploy({ data: campanhaFactoryContract.evm.deployedBytecode.object })
-                .send({ from: accounts[0], gas: '1000000' });
+        // Create a campaign through the factory contract
+        await campanhaFactory.createCampanha(100);
 
-            const transactionReceipt = await factory.deployed();
-            console.log('Contract deployed at:', transactionReceipt.contractAddress);
-
-            factory.createCampanha('100').send({
-                from: accounts[0], gas: '1000000'
-            });
-        } catch (error) {
-            console.log(error);
-        }
-
-
-        // campanhaAddress = factory.getDeployedCampaigns();
-        // campanha = await new web3.eth.Contract(campanhaContract.abi, campanhaAddress);
+        // Get the address of the deployed campaign
+        const [campaignAddress] = await campanhaFactory.getDeployedCampaigns();
+        campanha = await Campanha.attach(campaignAddress);
     });
 
     it('Is file loaded correctly?', () => {
-        assert.ok(campanhaFactoryContract); // Verify if the contract object is correctly loaded
-        assert.ok(campanhaContract); // Verify if the contract object is correctly loaded
+        assert.ok(CampanhaFactory); // Verify if the contract object is correctly loaded
+        assert.ok(Campanha); // Verify if the contract object is correctly loaded
     });
+
     it('Is the interface loaded correctly?', () => {
-        assert.ok(campanhaFactoryContract.abi); // Verify if the contract object is correctly loaded
-        assert.ok(campanhaContract.abi);
+        assert.ok(CampanhaFactory.interface); // Verify if the contract interface is correctly loaded
+        assert.ok(Campanha.interface); // Verify if the contract interface is correctly loaded
     });
 
-
-    // it('deploys a factory and a campanha', () => {
-    // assert.ok(factory.options.address);
-    // assert.ok(campanha.options.address);
-    // });
+    // Add more test cases as needed
 });

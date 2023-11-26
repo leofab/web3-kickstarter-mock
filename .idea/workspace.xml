@@ -5,15 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdb82a3f-891a-48d9-b994-d0258fc00002" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ethereum/build/build-info/2938f887b0033e453e065577c8e95a2e.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ethereum/build/ethereum/contracts/Campanha.sol/Campanha.dbg.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ethereum/build/ethereum/contracts/Campanha.sol/Campanha.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ethereum/build/ethereum/contracts/Campanha.sol/CampanhaFactory.dbg.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ethereum/build/ethereum/contracts/Campanha.sol/CampanhaFactory.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/build-info/92622940b37ad78ecf911f56845d24c8.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/Campanha.dbg.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/Campanha.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/CampanhaFactory.dbg.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/CampanhaFactory.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/contracts/Lock.sol/Lock.dbg.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/contracts/Lock.sol/Lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/Campanha.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ethereum/build/Campanha.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ethereum/build/CampanhaFactory.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/deploy.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/deploy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Campanha.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Campanha.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +47,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "hardhat-test",
+    "last_opened_file_path": "/home/pc/Área de Trabalho/kickstart-mock/contracts",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +57,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/contracts" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -62,7 +71,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701005874908</updated>
       <workItem from="1701005893821" duration="232000" />
-      <workItem from="1701006186573" duration="2154000" />
+      <workItem from="1701006186573" duration="4020000" />
     </task>
     <servers />
   </component>
