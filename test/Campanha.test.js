@@ -6,6 +6,8 @@ describe('Tests if the contract is correctly loaded', function () {
     let Campanha;
     let campanhaFactory;
     let campanha;
+    let campanhaFactoryReceipt;
+    let campanhaReceipt;
 
     beforeEach(async () => {
         // Load the contracts via Hardhat's artifacts
@@ -13,11 +15,14 @@ describe('Tests if the contract is correctly loaded', function () {
         Campanha = await ethers.getContractFactory('Campanha');
         campanhaFactory = await ethers.deployContract("CampanhaFactory", []);
         await campanhaFactory.waitForDeployment();
+        campanhaFactoryReceipt = await campanhaFactory.deploymentTransaction();
         await campanhaFactory.getFunction('createCampanha')(100);
         const campanhaAddress = await campanhaFactory.getFunction('getDeployedCampaigns')();
-        console.log(campanhaAddress[0]);
-        campanha = await ethers.deployContract("Campanha", [0, campanhaAddress[0]]);
+        campanha = await ethers.deployContract("Campanha", [0, campanhaFactory.deploymentTransaction().from]);
         await campanha.waitForDeployment();
+        campanhaReceipt = await campanha.deploymentTransaction();
+        // campanhaReceipt = await campanha.deploymentTransaction();
+        // fromWho = campanhaReceipt.from;
     });
 
     // describe('CampanhaFactory', () => {
@@ -65,8 +70,14 @@ describe('Tests if the contract is correctly loaded', function () {
     });
     it('Is campaign contract deployed?', async () => {
         console.log(
-            `Campanha deployed to ${campanha.target}`)
+            `Campanha deployed to ${campanha.target}`);
         assert.ok(`Campanha deployed to ${campanha.target}`);
+    });
+
+    it('Who is the Manager of the campanha and it is the same as the caller?', async () => {
+        const manager = await campanha.getFunction('manager')();
+        console.log(`Manager: ${manager}\n`);
+        assert.equal(manager, campanhaFactoryReceipt.from);
     });
 
     // Add more test cases as needed
