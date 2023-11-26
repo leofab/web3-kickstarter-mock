@@ -11,30 +11,33 @@ describe('Tests if the contract is correctly loaded', function () {
         // Load the contracts via Hardhat's artifacts
         CampanhaFactory = await ethers.getContractFactory('CampanhaFactory');
         Campanha = await ethers.getContractFactory('Campanha');
-
-        // Deploy the contracts using Hardhat's deployment functions
-        // campanhaFactory = await CampanhaFactory.deploy();
-        // await campanhaFactory.deployed();
-
-        // Create a campaign through the factory contract
-        // await campanhaFactory.createCampanha(100);
-
-        // Get the address of the deployed campaign
-        // const [campaignAddress] = await campanhaFactory.getDeployedCampaigns();
-        // campanha = await Campanha.attach(campaignAddress);
     });
 
     describe('CampanhaFactory', () => {
         it('Should deploy the factory contract', async () => {
-            const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-            const unlockTime = currentTimestampInSeconds + 60;
-
-            const lockedAmount = ethers.parseEther("0.001");
 
             campanhaFactory = await ethers.deployContract("CampanhaFactory", []);
 
             await campanhaFactory.waitForDeployment();
             assert.ok(`CampanhaFactory deployed to ${campanhaFactory.target}`);
+            console.log(
+                `CampanhaFactory deployed to ${campanhaFactory.target}`
+            );
+        });
+        it('Should create a new campaign', async () => {
+            campanhaFactory = await ethers.deployContract("CampanhaFactory", []);
+            await campanhaFactory.waitForDeployment();
+            console.log(
+                `CampanhaFactory deployed to ${campanhaFactory.target}`
+            );
+            const tx = await campanhaFactory.getFunction('createCampanha')(100);
+            const receipt = await tx.wait();
+            console.log(receipt);
+            // campanha = await ethers.getContractAt("Campanha", receipt.events[0].args.campanhaAddress);
+            // assert.ok(`Campanha deployed to ${campanha.target}`);
+            // console.log(
+            //     `Campanha deployed to ${campanha.target}`
+            // );
         });
     });
 
