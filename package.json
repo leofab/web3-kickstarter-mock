@@ -15,5 +15,9 @@
     "mocha": "^10.2.0",
     "solc": "^0.8.23",
     "web3": "^4.2.2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.1"
   }
 }
