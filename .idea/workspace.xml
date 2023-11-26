@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdb82a3f-891a-48d9-b994-d0258fc00002" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/contracts/Lock.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/deploy.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/Lock.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +55,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701005874908</updated>
       <workItem from="1701005893821" duration="232000" />
-      <workItem from="1701006186573" duration="805000" />
+      <workItem from="1701006186573" duration="1605000" />
     </task>
     <servers />
   </component>
