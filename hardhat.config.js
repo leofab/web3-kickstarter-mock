@@ -1,7 +1,9 @@
+require('dotenv').config();
 require("@nomicfoundation/hardhat-toolbox");
-const SEPOLIA_PRIVATE_KEY = "c0e92b8c927e4421bf01f62fb85487d4";
+const { INFURA_PROJECT_ID, SEPOLIA_PRIVATE_KEY } = process.env;
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  defaultNetwork: "sepolia",
   solidity: {
     compilers: [
       {
@@ -17,12 +19,12 @@ module.exports = {
   },
   networks: {
     sepolia: {
-      url: "https://sepolia.infura.io/v3/c0e92b8c927e4421bf01f62fb85487d4",
-      accounts: [`${SEPOLIA_PRIVATE_KEY}`]
-    },
+      url: `https://sepolia.infura.io/v3/c0e92b8c927e4421bf01f62fb85487d4`,
+      accounts: ['376ede10f438d287d6a6b290ee4c90e831c5c9310ac0f501edd62d5a18cd0228']
+    }
   },
   paths: {
     sources: "./contracts",
-    artifacts: "./build",
-  },
+    artifacts: "./build"
+  }
 };
