@@ -4,7 +4,7 @@ const CampaignFactory = require('./build/contracts/Campanha.sol/CampanhaFactory.
 
 const instance = new web3.eth.Contract(
     CampaignFactory.abi,
-    '0x39beA4F2e4407753Ed67789c52e7b2C181697756'
+    '0x3e233670c11C021BcC1cB33dB37B2412F9D870ac'
 );
 
 export default instance;
