@@ -24,8 +24,7 @@ class CampaignIndex extends React.Component {
     render() {
         return (
 
-            <div>
-                <Header />
+            <Header>
             <link
                 async
                 rel="stylesheet"
@@ -34,7 +33,7 @@ class CampaignIndex extends React.Component {
             <h3>Open Campaigns</h3>
             <Button content={"Create Campaign"} icon={"add circle"} primary={true} floated={"right"} />
             {this.renderCampaigns()}
-            </div>
+            </Header>
         );
     }
 }
