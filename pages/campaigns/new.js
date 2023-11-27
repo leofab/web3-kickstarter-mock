@@ -7,19 +7,23 @@ import web3 from "../../web3";
 class CampaignNew extends Component {
     state = {
         minimumContribution: '',
-        errorMessage: ''
+        errorMessage: '',
+        loading: false
     };
 
     onSubmit = async (e) =>{
         e.preventDefault();
+        this.setState({ loading: true, errorMessage: '' })
         try{
             const accounts = await web3.eth.getAccounts();
-            await factory.methods.createCampaign(this.state.minimumContribution).send({
+            await factory.methods.createCampanha(this.state.minimumContribution).send({
                 from: accounts[0]
             });
         } catch (err) {
-            this.setState({ errorMessage: err.message })
+            this.setState({ loading: false, errorMessage: err.message })
             console.log(err);
+        }finally {
+            this.setState({ loading: false })
         }
 
     }
@@ -38,7 +42,7 @@ class CampaignNew extends Component {
                             onChange={event => this.setState({minimumContribution: event.target.value})}/>
                     </Form.Field>
                     {hasError && <Message error header="Oops!" content={this.state.errorMessage} />}
-                    <Button primary>Create!</Button>
+                    <Button loading={this.state.loading} primary>Create!</Button>
                 </Form>
             </Header>
         );
