@@ -9,16 +9,16 @@ module.exports = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 200,
-          },
-        },
-      },
-    ],
+            runs: 200
+          }
+        }
+      }
+    ]
   },
   networks: {
     sepolia: {
       url: "https://sepolia.infura.io/v3/c0e92b8c927e4421bf01f62fb85487d4",
-      accounts: [`${SEPOLIA_PRIVATE_KEY}`],
+      accounts: [`${SEPOLIA_PRIVATE_KEY}`]
     },
   },
   paths: {

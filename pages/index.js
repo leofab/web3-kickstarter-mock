@@ -1,5 +1,15 @@
 import React from "react";
+import factory from "../factory";
 
-export default() => {
-    return <h1>Campaigns List</h1>
+class CampaignIndex extends React.Component {
+    async componentDidMount() {
+        const campaigns = await factory.methods.getDeployedCampaigns().call();
+        console.log(campaigns);
+    }
+
+    render() {
+        return <div>Campaigns Index!</div>;
+    }
 }
+
+export default CampaignIndex;
