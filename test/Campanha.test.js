@@ -121,5 +121,17 @@ describe('Tests if the contract is correctly loaded', function () {
         }
     });
 
+    it('processes requests', async () => {
+        await campanha.getFunction('contribute')({value: '200', from: campanhaFactory.deploymentTransaction().from});
+        await campanha.getFunction('createRequest')('A', '100', acc1, {from: acc0});
+        await campanha.getFunction('approveRequest')(0, {from: campanhaFactory.deploymentTransaction().from});
+        await campanha.getFunction('finalizeRequest')(0, {from: acc0});
+        let balance = await ethers.provider.getBalance(acc1);
+        balance = await ethers.formatEther(balance);
+        balance = parseFloat(balance);
+        console.log(balance);
+        assert(balance > 104);
+    });
+
     // Add more test cases as needed
 });
