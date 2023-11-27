@@ -8,6 +8,9 @@ describe('Tests if the contract is correctly loaded', function () {
     let campanha;
     let campanhaFactoryReceipt;
     let campanhaReceipt;
+    let campanha2;
+    let acc0;
+    let acc1;
 
     beforeEach(async () => {
         // Load the contracts via Hardhat's artifacts
@@ -21,6 +24,8 @@ describe('Tests if the contract is correctly loaded', function () {
         campanha = await ethers.deployContract("Campanha", [0, campanhaFactory.deploymentTransaction().from]);
         await campanha.waitForDeployment();
         campanhaReceipt = await campanha.deploymentTransaction();
+        [acc0, acc1] = await ethers.getSigners();
+        campanha2 = await ethers.deployContract("Campanha", [0, acc1]);
         // campanhaReceipt = await campanha.deploymentTransaction();
         // fromWho = campanhaReceipt.from;
     });
@@ -78,6 +83,27 @@ describe('Tests if the contract is correctly loaded', function () {
         const manager = await campanha.getFunction('manager')();
         console.log(`Manager: ${manager}\n`);
         assert.equal(manager, campanhaFactoryReceipt.from);
+    });
+
+    it('allows people to contribute money and marks them as approvers', async () => {
+        await campanha.getFunction('contribute')({value: '200', from: campanhaFactory.deploymentTransaction().from});
+        const isContributor = await campanha.getFunction('contributers')(campanhaFactory.deploymentTransaction().from);
+        assert(isContributor);
+    });
+
+    it('requires a minimum contribution', async () => {
+        try {
+            await campanha.getFunction('contribute')({value: '5', from: campanhaFactory.deploymentTransaction().from});
+            assert(false);
+        } catch (err) {
+            assert(err);
+        }
+    });
+
+    it('asserts campanha2 is deployed with another creator', async () => {
+        const manager = await campanha2.getFunction('manager')();
+        console.log(`Manager: ${manager}\n`);
+        assert.notEqual(manager, acc1);
     });
 
     // Add more test cases as needed
