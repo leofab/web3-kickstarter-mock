@@ -106,5 +106,20 @@ describe('Tests if the contract is correctly loaded', function () {
         assert.notEqual(manager, acc1);
     });
 
+    it('allows a manager to make a payment request', async () => {
+        await campanha.getFunction('createRequest')('Buy batteries', '100', acc1, {from: acc0});
+        const request = await campanha.getFunction('requests')(0);
+        assert.equal('Buy batteries', request.description);
+    });
+
+    it('requires that only manager creates a payment request', async () => {
+        try {
+            await campanha.getFunction('createRequest')('Buy batteries', '100', acc1, {from: acc1});
+            assert(false);
+        } catch (err) {
+            assert(err);
+        }
+    });
+
     // Add more test cases as needed
 });
