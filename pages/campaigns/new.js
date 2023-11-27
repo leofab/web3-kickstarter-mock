@@ -4,6 +4,8 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 import factory from "../../factory";
 import web3 from "../../web3";
 
+import { Router } from '../../routes';
+
 class CampaignNew extends Component {
     state = {
         minimumContribution: '',
@@ -19,6 +21,7 @@ class CampaignNew extends Component {
             await factory.methods.createCampanha(this.state.minimumContribution).send({
                 from: accounts[0]
             });
+            await Router.pushRoute('/?success=true');
         } catch (err) {
             this.setState({ loading: false, errorMessage: err.message })
             console.log(err);
@@ -27,6 +30,7 @@ class CampaignNew extends Component {
         }
 
     }
+
     render() {
         const hasError = !!this.state.errorMessage;
         return (
