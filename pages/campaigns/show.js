@@ -3,6 +3,8 @@ import Header from '../../components/Header';
 import Campaign from '../../campaign';
 import Card from 'semantic-ui-react/dist/commonjs/views/Card';
 import web3 from '../../web3';
+import Contribute from "../../components/Contribute";
+import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 class CampaignShow extends Component {
 
     static async getInitialProps(props) {
@@ -69,8 +71,19 @@ class CampaignShow extends Component {
     render() {
         return (
             <Header>
-                <h3>Campaign {this.props.address}</h3>
-                {this.renderCards()}
+                <h1>Campaign {this.props.address}</h1>
+                <Grid>
+                    <Grid.Row>
+                        <Grid.Column width={10}>
+                            <h3>Detalhes da Campanha</h3>
+                            {this.renderCards()}
+                        </Grid.Column>
+                        <Grid.Column width={6}>
+                            <h3>Contribuir</h3>
+                            <Contribute address={this.props.address}/>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
             </Header>
         );
     }
