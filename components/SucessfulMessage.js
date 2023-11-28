@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Message } from 'semantic-ui-react';
+import $ from 'jquery'; // Import jQuery
+import 'semantic-ui-css/semantic.min.css';
 
 const SucessfulMessageComponent = ({ showMessage, messageText }) => {
     const [visible, setVisible] = useState(showMessage);
