@@ -26,7 +26,7 @@ class CampaignIndex extends React.Component {
                 fluid: true
             };
         });
-        return <Card.Group items={items} />;
+        return <Card.Group items={items.reverse()} />;
     }
     handleCreateCampaignClick = async () => {
         this.setState({ loading: true });
