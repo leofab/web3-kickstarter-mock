@@ -4,6 +4,7 @@ import {Button, Card, Menu} from "semantic-ui-react";
 import Header from "../components/Header";
 import {Router} from "../routes";
 import SucessfulMessageComponent from '../components/SucessfulMessage';
+import { Link } from '../routes';
 
 class CampaignIndex extends React.Component {
     state ={
@@ -22,7 +23,11 @@ class CampaignIndex extends React.Component {
         const items = this.props.campaigns.map(address => {
             return {
                 header: address,
-                description: <a>View Campaign</a>,
+                description: (
+                    <Link route={`/campaigns/${address}`}>
+                        View Campaign
+                    </Link>
+                ),
                 fluid: true
             };
         });
