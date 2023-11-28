@@ -79,6 +79,16 @@ class CampaignShow extends Component {
                     <Grid.Row>
                         <Grid.Column width={10}>
                             <h3>Detalhes da Campanha</h3>
+                        <h6></h6>
+                            {this.renderCards()}
+                        </Grid.Column>
+                        <Grid.Column width={6}>
+                            <h3>Contribuir</h3>
+                            <Contribute address={this.props.address}/>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Grid.Column>
                             <Button
                                 content={"View Requests"}
                                 icon={"add circle"}
@@ -88,12 +98,6 @@ class CampaignShow extends Component {
                                     Link.Router.pushRoute(`/campaigns/${this.props.address}/requests`);
                                 }}
                             />
-                        <h6></h6>
-                            {this.renderCards()}
-                        </Grid.Column>
-                        <Grid.Column width={6}>
-                            <h3>Contribuir</h3>
-                            <Contribute address={this.props.address}/>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
