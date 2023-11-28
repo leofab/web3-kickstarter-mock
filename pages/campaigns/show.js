@@ -6,15 +6,17 @@ import web3 from '../../web3';
 class CampaignShow extends Component {
 
     static async getInitialProps(props) {
+        const address = props.query.address;
         const campaign = Campaign(props.query.address);
         const summary = await campaign.methods.getSummary().call();
-        console.log(summary);
+        console.log(address);
         return {
             minimumContribution: summary[0].toString(),
             balance: summary[1].toString(),
             requestsCount: summary[2].toString(),
             approversCount: summary[3].toString(),
-            manager: summary[4]
+            manager: summary[4],
+            address: address
         };
     }
 
@@ -24,7 +26,8 @@ class CampaignShow extends Component {
             manager,
             minimumContribution,
             requestsCount,
-            approversCount
+            approversCount,
+            address
         } = this.props;
 
         const items = [
@@ -66,6 +69,7 @@ class CampaignShow extends Component {
     render() {
         return (
             <Header>
+                <h3>Campaign {this.props.address}</h3>
                 {this.renderCards()}
             </Header>
         );
