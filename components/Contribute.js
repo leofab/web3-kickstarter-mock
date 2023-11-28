@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 import { Form, Input, Message, Button } from 'semantic-ui-react';
 import web3 from "../web3";
 import Campaign from "../campaign";
+import SucessfulMessageComponent from '../components/SucessfulMessage';
 import {Router} from "../routes";
 
 class Contribute extends Component {
@@ -10,7 +11,9 @@ class Contribute extends Component {
         value: '',
         minimumContribution: '',
         errorMessage: '',
-        loading: false
+        loading: false,
+        showMessage: false,
+        messageText: ''
     }
 
     onSubmit = async (e) => {
@@ -25,7 +28,7 @@ class Contribute extends Component {
                 from: accounts[0],
                 value: web3.utils.toWei(value, 'ether')
             });
-            Router.pushRoute(`/campaigns/${address}`);
+            Router.pushRoute(`/campaigns/${address}/?success=true`);
         } catch (err) {
             this.setState({ loading: false, errorMessage: err.message, value: '' });
             console.log(err);
@@ -33,9 +36,24 @@ class Contribute extends Component {
             this.setState({ loading: false, errorMessage: '', value: '' })
         }
     }
+    componentDidMount() {
+        // Check if success message needs to be shown after redirect from CampaignNew
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('success')) {
+            // After the navigation, set state to show the message
+            this.setState({ showMessage: true, messageText: 'Your contribution was successful!' });
+
+            // Hide the message after a certain time (optional)
+            setTimeout(() => {
+                this.setState({ showMessage: false, messageText: '' });
+            }, 3000); // 3000ms (3 seconds) - adjust the time as needed
+        }
+    }
     render() {
         return (
+
             <Form onSubmit={this.onSubmit}>
+                <SucessfulMessageComponent showMessage={this.state.showMessage} messageText={this.state.messageText} />
                 <Form.Field>
                     <label>Amount to Contribute</label>
                     <Input
