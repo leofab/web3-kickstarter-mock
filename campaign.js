@@ -1,9 +1,9 @@
 import web3 from './web3';
-import CampaignFactory from './build/contracts/Campanha.sol/CampanhaFactory.json';
+import Campanha from './build/contracts/Campanha.sol/Campanha.json';
 
 export default (address) => {
     return new web3.eth.Contract(
-        CampaignFactory.abi,
+        Campanha.abi,
         address
     );
 };
