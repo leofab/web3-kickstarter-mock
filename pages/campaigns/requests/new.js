@@ -35,29 +35,31 @@ class RequestNew extends Component {
         const { description, value, recipient } = this.state;
         this.setState({ loading: true, errorMessage: '' })
         try{
-            if(manager !== web3.eth.defaultAccount) {
-                throw new Error('Only the manager can create a request');
+            if(manager !== await web3.eth.getAccounts()[0]){
+                const err = 'Only the manager can create a request';
+                this.setState({ loading: false, errorMessage: err, value: '' })
             }
-            const accounts = await web3.eth.getAccounts();
-            const campaign = Campaign(address);
             await campaign.methods.createRequest(description, web3.utils.toWei(value, 'ether'), recipient).send({
                 from: accounts[0]
             });
+            this.setState({ loading: false, errorMessage: '', value: '' })
             Router.pushRoute(`/campaigns/${address}/requests`);
         } catch (err) {
             this.setState({ loading: false, errorMessage: err.message, value: '' });
             console.log(err);
         }finally {
-            this.setState({ loading: false, errorMessage: '', value: '' })
+            this.setState({ loading: false})
         }
     }
 
     render() {
+        const hasError = !!this.state.errorMessage;
         return (
             <Header>
                 <h1>Campanha {this.props.address}</h1>
+                {hasError && <Message error header="Oops!" content={this.state.errorMessage} />}
             <h3>Request New</h3>
-                <Form>
+                <Form onSubmit={this.onSubmit}>
                     <Form.Field>
                         <label>Description</label>
                         <Input

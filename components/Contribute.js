@@ -33,7 +33,7 @@ class Contribute extends Component {
             this.setState({ loading: false, errorMessage: err.message, value: '' });
             console.log(err);
         }finally {
-            this.setState({ loading: false, errorMessage: '', value: '' })
+            this.setState({ loading: false})
         }
     }
     componentDidMount() {
