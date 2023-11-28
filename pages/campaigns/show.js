@@ -5,6 +5,9 @@ import Card from 'semantic-ui-react/dist/commonjs/views/Card';
 import web3 from '../../web3';
 import Contribute from "../../components/Contribute";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Link from "../../routes";
+
 class CampaignShow extends Component {
 
     static async getInitialProps(props) {
@@ -76,6 +79,16 @@ class CampaignShow extends Component {
                     <Grid.Row>
                         <Grid.Column width={10}>
                             <h3>Detalhes da Campanha</h3>
+                            <Button
+                                content={"View Requests"}
+                                icon={"add circle"}
+                                primary={true}
+                                floated={"top"}
+                                onClick={() => {
+                                    Link.Router.pushRoute(`/campaigns/${this.props.address}/requests`);
+                                }}
+                            />
+                        <h6></h6>
                             {this.renderCards()}
                         </Grid.Column>
                         <Grid.Column width={6}>

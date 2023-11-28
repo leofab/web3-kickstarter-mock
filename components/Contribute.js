@@ -52,8 +52,7 @@ class Contribute extends Component {
     render() {
         const hasError = !!this.state.errorMessage;
         return (
-            <Form onSubmit={this.onSubmit}>
-                {hasError && <Message error header="Oops!" content={this.state.errorMessage} />}
+            <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                 <SucessfulMessageComponent showMessage={this.state.showMessage} messageText={this.state.messageText} />
                 <Form.Field>
                     <label>Amount to Contribute</label>
@@ -64,6 +63,7 @@ class Contribute extends Component {
                         labelPosition="right"
                     />
                 </Form.Field>
+                {hasError && <Message error header="Oops!" content={this.state.errorMessage} />}
                 <Button loading={this.state.loading} primary>Contribute!</Button>
             </Form>
         );
