@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdb82a3f-891a-48d9-b994-d0258fc00002" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/build/build-info/e20c0b1de3e9b54c7ba503cfbdb9933e.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/contracts/Campanha.sol/Campanha.dbg.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/Campanha.dbg.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/contracts/Campanha.sol/Campanha.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/Campanha.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/contracts/Campanha.sol/CampanhaFactory.dbg.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/CampanhaFactory.dbg.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/contracts/Campanha.sol/CampanhaFactory.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/contracts/Campanha.sol/CampanhaFactory.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contracts/Campanha.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/Campanha.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factory.js" beforeDir="false" afterPath="$PROJECT_DIR$/factory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +87,7 @@
       <workItem from="1701108044289" duration="16072000" />
       <workItem from="1701130040334" duration="5000" />
       <workItem from="1701142242285" duration="1907000" />
-      <workItem from="1701172089528" duration="2893000" />
+      <workItem from="1701172089528" duration="3223000" />
     </task>
     <servers />
   </component>
