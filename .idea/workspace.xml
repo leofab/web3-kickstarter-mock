@@ -5,37 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdb82a3f-891a-48d9-b994-d0258fc00002" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/suialert/LICENSE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/_config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/custom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/custom.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/prism.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/semantic.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/themes/default/assets/fonts/icons.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/themes/default/assets/fonts/icons.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/themes/default/assets/fonts/icons.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/themes/default/assets/fonts/icons.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/themes/default/assets/fonts/icons.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/themes/default/assets/fonts/icons.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/css/themes/default/assets/images/flags.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/dist/semantic-ui-alerts.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/dist/semantic-ui-alerts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/dist/semantic-ui-alerts.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/dist/semantic-ui-alerts.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/js/home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/js/home.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/js/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/js/jquery-3.0.0.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/js/prism.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/js/semantic.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/js/vue.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/suialert/readme.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/SucessfulMessage.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/SucessfulMessage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_document.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +83,7 @@
       <workItem from="1701130040334" duration="5000" />
       <workItem from="1701142242285" duration="1907000" />
       <workItem from="1701172089528" duration="8811000" />
-      <workItem from="1701193898201" duration="1917000" />
+      <workItem from="1701193898201" duration="3211000" />
     </task>
     <servers />
   </component>
