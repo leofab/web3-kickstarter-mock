@@ -27,10 +27,10 @@ class Contribute extends Component {
             });
             Router.pushRoute(`/campaigns/${address}`);
         } catch (err) {
-            this.setState({ loading: false, errorMessage: err.message })
+            this.setState({ loading: false, errorMessage: err.message, value: '' });
             console.log(err);
         }finally {
-            this.setState({ loading: false })
+            this.setState({ loading: false, errorMessage: '', value: '' })
         }
     }
     render() {
