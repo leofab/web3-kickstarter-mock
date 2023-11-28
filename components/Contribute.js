@@ -19,7 +19,7 @@ class Contribute extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
         const { address } = this.props;
-        const { value, minimumContribution, errorMessage } = this.state;
+        const { value } = this.state;
         this.setState({ loading: true, errorMessage: '' })
         try{
             const accounts = await web3.eth.getAccounts();
@@ -50,9 +50,10 @@ class Contribute extends Component {
         }
     }
     render() {
+        const hasError = !!this.state.errorMessage;
         return (
-
             <Form onSubmit={this.onSubmit}>
+                {hasError && <Message error header="Oops!" content={this.state.errorMessage} />}
                 <SucessfulMessageComponent showMessage={this.state.showMessage} messageText={this.state.messageText} />
                 <Form.Field>
                     <label>Amount to Contribute</label>
