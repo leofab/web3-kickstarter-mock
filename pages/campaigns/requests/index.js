@@ -7,6 +7,7 @@ import {GridColumn, GridRow, Message, TableBody, TableHeader, TableRow} from "se
 import Campaign from "../../../campaign";
 import Table from "semantic-ui-react/dist/commonjs/collections/Table";
 import web3 from "../../../web3";
+import {Router} from "../../../routes";
 class RequestsIndex extends Component {
 
     state= {
@@ -45,17 +46,20 @@ class RequestsIndex extends Component {
         const { manager } = this.props;
         const campaign = Campaign(this.props.address);
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const bool = await campaign.methods.contributers(accounts[0]).call();
+        console.log(bool)
         this.setState({errMessage: ''});
         try {
-            if(manager.toLowerCase() !== accounts[0].toLowerCase()){
-                let error = 'Only the manager can approve a request';
+            if(!bool){
+                let error = 'Only a contributer can approve a request, donate to the Campaign to become a contributer';
                 this.setState({errMessage: error});
-                throw new Error('Only the manager can approve a request');
+                throw new Error('Only a contributer can approve a request, donate to the Campaign to become a contributer');
             }
             const requestID = index;
             await campaign.methods.approveRequest(requestID).send({
                 from: accounts[0]
             });
+            await Router.reload()
         }catch (err){
             this.setState({errMessage: err.message});
         }

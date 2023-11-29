@@ -35,7 +35,7 @@ class RequestNew extends Component {
             if(manager.toLowerCase() !== accounts[0].toLowerCase()){
                 const err = 'Only the manager can create a request';
                 this.setState({ loading: false, errorMessage: err, value: '' })
-                throw new Error('Only the manager can approve a request');
+                throw new Error('Only the manager can create a request');
             }
             await campaign.methods.createRequest(description, web3.utils.toWei(value, 'ether'), recipient).send({
                 from: accounts[0]
