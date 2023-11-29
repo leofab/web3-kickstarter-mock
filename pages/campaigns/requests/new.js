@@ -20,10 +20,6 @@ class RequestNew extends Component {
         const summary = await campaign.methods.getSummary().call();
         console.log(address);
         return {
-            minimumContribution: summary[0].toString(),
-            balance: summary[1].toString(),
-            requestsCount: summary[2].toString(),
-            approversCount: summary[3].toString(),
             manager: summary[4],
             address: address
         };
@@ -37,7 +33,7 @@ class RequestNew extends Component {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         this.setState({ loading: true, errorMessage: '' })
         try{
-            if(!window.ethereum || manager !== await window.ethereum.request({ method: 'eth_requestAccounts' })[0]){
+            if(!window.ethereum || manager !== accounts[0]){
                 const err = 'Only the manager can create a request';
                 this.setState({ loading: false, errorMessage: err, value: '' })
             }

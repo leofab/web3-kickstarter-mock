@@ -5,7 +5,7 @@ let web3;
 // Check if MetaMask's Ethereum provider is available
 if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
     // Request account access if needed
-    window.ethereum.enable().catch(error => {
+    window.ethereum.request({ method: 'eth_requestAccounts' }).catch(error => {
         console.error('User denied account access:', error);
     });
 
