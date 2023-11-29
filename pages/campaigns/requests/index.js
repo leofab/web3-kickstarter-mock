@@ -34,7 +34,6 @@ class RequestsIndex extends Component {
             const request = await campaign.methods.requests(i).call();
             requests.push(request);
         }
-        console.log(requests)
         this.setState({requests});
     }
 
@@ -47,7 +46,6 @@ class RequestsIndex extends Component {
         const campaign = Campaign(this.props.address);
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         this.setState({errMessage: ''});
-        console.log(accounts[0])
         try {
             if(manager.toLowerCase() !== accounts[0].toLowerCase()){
                 let error = 'Only the manager can approve a request';
