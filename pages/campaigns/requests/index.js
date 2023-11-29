@@ -52,7 +52,8 @@ class RequestsIndex extends Component {
                 <Grid>
                     <GridRow>
                         <GridColumn>
-                            <h1>Campaign {this.props.address}</h1>
+                            <h2>Campaign Requests</h2>
+                            <h4>Nø - {this.props.address}</h4>
                             {this.renderCards()}
                         </GridColumn>
                     </GridRow>
