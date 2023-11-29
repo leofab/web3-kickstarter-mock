@@ -3,9 +3,9 @@ import Header from '../../../components/Header';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Link from "../../../routes";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import {GridColumn, GridRow} from "semantic-ui-react";
+import {GridColumn, GridRow, TableBody, TableHeader, TableRow} from "semantic-ui-react";
 import Campaign from "../../../campaign";
-import Card from "semantic-ui-react/dist/commonjs/views/Card";
+import Table from "semantic-ui-react/dist/commonjs/collections/Table";
 import web3 from "../../../web3";
 class RequestsIndex extends Component {
 
@@ -26,48 +26,51 @@ class RequestsIndex extends Component {
             requests: requests,
         };
     }
-    renderCards() {
-        const {
-            manager,
-            address,
-            requests
-        } = this.props;
 
-            const items = []
-
-        for (let i = 0; i < requests.length; i++) {
-            items.push({
-                header: JSON.stringify(requests[i].description),
-                meta: 'Complete: ' + requests[i].complete + ' | ' + 'Value: ' + web3.utils.fromWei(requests[i].value, 'ether'),
-                description: 'Recipient '+JSON.stringify(requests[i].recipient),
-                style: { overflowWrap: 'break-word' }
-            })
-        }
-
-        return <Card.Group items={items} />;
-    }
     render() {
         return (
             <Header>
                 <Grid>
                     <GridRow>
-                        <GridColumn>
-                            <h2>Campaign Requests</h2>
-                            <h4>Nø - {this.props.address}</h4>
-                            {this.renderCards()}
+                        <GridColumn width={14}>
+                            <h3>Requests for Campaign nø  {this.props.address}</h3>
                         </GridColumn>
-                    </GridRow>
-                    <GridRow>
-                        <GridColumn>
+                        <GridColumn width={2}>
                             <Button
-                                content={"Adicionar Request"}
+                                content={"Add Request"}
                                 icon={"add circle"}
                                 primary={true}
-                                floated={"top"}
+                                floated={"right"}
                                 onClick={() => {
                                     Link.Router.pushRoute(`/campaigns/${this.props.address}/requests/new`);
                                 }}
                             />
+                        </GridColumn>
+                    </GridRow>
+                    <GridRow>
+                        <GridColumn>
+                            <Table singleLine>
+                                <TableHeader>
+                                    <TableRow>
+                                        <Table.HeaderCell>Description</Table.HeaderCell>
+                                        <Table.HeaderCell>Complete</Table.HeaderCell>
+                                        <Table.HeaderCell>Value</Table.HeaderCell>
+                                        <Table.HeaderCell>Recipient</Table.HeaderCell>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {this.props.requests.map((request, index) => {
+                                        return (
+                                            <TableRow key={index}>
+                                                <Table.Cell>{request.description}</Table.Cell>
+                                                <Table.Cell>{request.complete}</Table.Cell>
+                                                <Table.Cell>{web3.utils.fromWei(request.value, 'ether')}</Table.Cell>
+                                                <Table.Cell>{request.recipient}</Table.Cell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
                         </GridColumn>
                     </GridRow>
                 </Grid>
