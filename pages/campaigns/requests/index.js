@@ -3,7 +3,7 @@ import Header from '../../../components/Header';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Link from "../../../routes";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import {GridColumn, GridRow, TableBody, TableHeader, TableRow} from "semantic-ui-react";
+import {GridColumn, GridRow, Message, TableBody, TableHeader, TableRow} from "semantic-ui-react";
 import Campaign from "../../../campaign";
 import Table from "semantic-ui-react/dist/commonjs/collections/Table";
 import web3 from "../../../web3";
@@ -12,8 +12,7 @@ class RequestsIndex extends Component {
     state= {
         requests: [],
         id: 0,
-        errMessage: '',
-        loading: false
+        errMessage: ''
     }
 
     static async getInitialProps(props) {
@@ -44,26 +43,28 @@ class RequestsIndex extends Component {
     }
 
     onApprove = async (index) => {
+        const { manager } = this.props;
         const campaign = Campaign(this.props.address);
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        this.setState({errMessage: '', loading: true});
+        this.setState({errMessage: ''});
+        console.log(accounts[0])
         try {
-            if(window.ethereum && accounts[0] == this.props.manager){
-                const requestID = index;
-                await campaign.methods.approveRequest(requestID).send({
-                    from: accounts[0]
-                });
+            if(manager.toLowerCase() !== accounts[0].toLowerCase()){
+                let error = 'Only the manager can approve a request';
+                this.setState({errMessage: error});
+                throw new Error('Only the manager can approve a request');
             }
-            let error = 'Only the manager can approve a request';
-            this.setState({errMessage: error});
+            const requestID = index;
+            await campaign.methods.approveRequest(requestID).send({
+                from: accounts[0]
+            });
         }catch (err){
-            this.setState({errMessage: err.message, loading: false});
-        }finally {
-            this.setState({loading: false});
+            this.setState({errMessage: err.message});
         }
     }
 
     render() {
+        const hasError = !!this.state.errMessage;
         return (
             <Header>
                 <Grid>
@@ -81,6 +82,11 @@ class RequestsIndex extends Component {
                                     Link.Router.pushRoute(`/campaigns/${this.props.address}/requests/new`);
                                 }}
                             />
+                        </GridColumn>
+                    </GridRow>
+                    <GridRow>
+                        <GridColumn>
+                            {hasError && <Message error header="Oops!" content={this.state.errMessage} />}
                         </GridColumn>
                     </GridRow>
                     <GridRow>
@@ -109,7 +115,10 @@ class RequestsIndex extends Component {
                                                 <Table.Cell>{request.recipient}</Table.Cell>
                                                 <Table.Cell>{parseInt(request.approvalCount)}/{this.props.approversCount}</Table.Cell>
                                                 <Table.Cell>
-                                                    <Button loading={this.state.loading} color={'green'} basic onClick={()=>this.onApprove(index)}>Approve</Button>
+                                                    <Button
+                                                        color={'green'}
+                                                        basic
+                                                        onClick={(e)=>this.onApprove(index)}>Approve</Button>
                                                 </Table.Cell>
                                                 <Table.Cell>
                                                     <Button color={'red'} basic>Finalize</Button>

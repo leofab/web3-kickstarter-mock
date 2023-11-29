@@ -18,7 +18,6 @@ class RequestNew extends Component {
         const address = props.query.address;
         const campaign = Campaign(props.query.address);
         const summary = await campaign.methods.getSummary().call();
-        console.log(address);
         return {
             manager: summary[4],
             address: address
@@ -33,9 +32,10 @@ class RequestNew extends Component {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         this.setState({ loading: true, errorMessage: '' })
         try{
-            if(!window.ethereum && manager !== accounts[0]){
+            if(manager.toLowerCase() !== accounts[0].toLowerCase()){
                 const err = 'Only the manager can create a request';
                 this.setState({ loading: false, errorMessage: err, value: '' })
+                throw new Error('Only the manager can approve a request');
             }
             await campaign.methods.createRequest(description, web3.utils.toWei(value, 'ether'), recipient).send({
                 from: accounts[0]
