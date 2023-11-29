@@ -33,7 +33,7 @@ class RequestNew extends Component {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         this.setState({ loading: true, errorMessage: '' })
         try{
-            if(!window.ethereum || manager !== accounts[0]){
+            if(!window.ethereum && manager !== accounts[0]){
                 const err = 'Only the manager can create a request';
                 this.setState({ loading: false, errorMessage: err, value: '' })
             }

@@ -13,52 +13,36 @@ class RequestsIndex extends Component {
         const address = props.query.address;
         const campaign = Campaign(props.query.address);
         const summary = await campaign.methods.getSummary().call();
-        console.log(address);
+        let requestNum = await campaign.methods.getRequestsCount().call();
+        let requests = [];
+        for(let i = 0; i < requestNum; i++){
+            const request = await campaign.methods.requests(i).call();
+            requests.push(request);
+        }
+        console.log(requests);
         return {
-            minimumContribution: summary[0].toString(),
-            balance: summary[1].toString(),
-            requestsCount: summary[2].toString(),
-            approversCount: summary[3].toString(),
             manager: summary[4],
-            address: address
+            address: address,
+            requests: requests,
         };
     }
     renderCards() {
         const {
-            balance,
             manager,
-            minimumContribution,
-            requestsCount,
-            approversCount,
-            address
+            address,
+            requests
         } = this.props;
 
-        const items = [
-            {
-                header: manager,
-                meta: 'Address of Manager',
-                description: 'The manager created this campaign and can create requests to withdraw money',
+            const items = []
+
+        for (let i = 0; i < requests.length; i++) {
+            items.push({
+                header: JSON.stringify(requests[i].description),
+                meta: 'Complete: ' + requests[i].complete + ' | ' + 'Value: ' + web3.utils.fromWei(requests[i].value, 'ether'),
+                description: 'Recipient '+JSON.stringify(requests[i].recipient),
                 style: { overflowWrap: 'break-word' }
-            },
-            {
-                header: minimumContribution,
-                meta: 'Minimum Contribution (wei)',
-                description: 'You must contribute at least this much wei to become an approver',
-                style: { overflowWrap: 'break-word'}
-            },
-            {
-                header: requestsCount,
-                meta: 'Number of Requests',
-                description: 'A request tries to withdraw money from the contract. Requests must be approved by approvers',
-                style: { overflowWrap: 'break-word'}
-            },
-            {
-                header: approversCount,
-                meta: 'Number of Approvers',
-                description: 'Number of people who have already donated to this campaign',
-                style: { overflowWrap: 'break-word'}
-            }
-        ]
+            })
+        }
 
         return <Card.Group items={items} />;
     }
