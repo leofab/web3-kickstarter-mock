@@ -19,6 +19,7 @@ class RequestsIndex extends Component {
         const summary = await campaign.methods.getSummary().call();
         return {
             manager: summary[4],
+            approversCount: summary[3].toString(),
             address: address
         };
     }
@@ -64,6 +65,7 @@ class RequestsIndex extends Component {
                             <Table singleLine>
                                 <TableHeader>
                                     <TableRow>
+                                        <Table.HeaderCell>ID</Table.HeaderCell>
                                         <Table.HeaderCell>Description</Table.HeaderCell>
                                         <Table.HeaderCell>Complete</Table.HeaderCell>
                                         <Table.HeaderCell>Value</Table.HeaderCell>
@@ -77,11 +79,12 @@ class RequestsIndex extends Component {
                                     {this.state.requests.map((request, index) => {
                                         return (
                                             <TableRow key={index}>
+                                                <Table.Cell>{index+1}</Table.Cell>
                                                 <Table.Cell>{request.description}</Table.Cell>
                                                 <Table.Cell>{JSON.stringify(request.complete)}</Table.Cell>
                                                 <Table.Cell>{web3.utils.fromWei(request.value, 'ether')} eth</Table.Cell>
                                                 <Table.Cell>{request.recipient}</Table.Cell>
-                                                <Table.Cell>{parseInt(request.approvalCount)}</Table.Cell>
+                                                <Table.Cell>{parseInt(request.approvalCount)}/{this.props.approversCount}</Table.Cell>
                                                 <Table.Cell positive={true}>Approve</Table.Cell>
                                                 <Table.Cell negative={true}>Finalize</Table.Cell>
                                             </TableRow>
