@@ -9,22 +9,29 @@ import Table from "semantic-ui-react/dist/commonjs/collections/Table";
 import web3 from "../../../web3";
 class RequestsIndex extends Component {
 
+    state= {
+        requests: []
+    }
+
     static async getInitialProps(props) {
         const address = props.query.address;
         const campaign = Campaign(props.query.address);
         const summary = await campaign.methods.getSummary().call();
-        let requestNum = await campaign.methods.getRequestsCount().call();
+        return {
+            manager: summary[4],
+            address: address
+        };
+    }
+
+    async componentDidMount() {
+        const campaign = Campaign(this.props.address);
+        const requestNum = await campaign.methods.getRequestsCount().call();
         let requests = [];
         for(let i = 0; i < requestNum; i++){
             const request = await campaign.methods.requests(i).call();
             requests.push(request);
         }
-        console.log(requests);
-        return {
-            manager: summary[4],
-            address: address,
-            requests: requests,
-        };
+        this.setState({requests});
     }
 
     render() {
@@ -59,7 +66,7 @@ class RequestsIndex extends Component {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {this.props.requests.map((request, index) => {
+                                    {this.state.requests.map((request, index) => {
                                         return (
                                             <TableRow key={index}>
                                                 <Table.Cell>{request.description}</Table.Cell>
