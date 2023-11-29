@@ -23,7 +23,8 @@ class RequestsIndex extends Component {
         return {
             manager: summary[4],
             approversCount: summary[3].toString(),
-            address: address
+            address: address,
+            recipient: summary[5]
         };
     }
 
@@ -58,6 +59,28 @@ class RequestsIndex extends Component {
             const requestID = index;
             await campaign.methods.approveRequest(requestID).send({
                 from: accounts[0]
+            });
+            await Router.reload()
+        }catch (err){
+            this.setState({errMessage: err.message});
+        }
+    }
+
+    onFinalize = async (index) => {
+        const { manager } = this.props;
+        const campaign = Campaign(this.props.address);
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        this.setState({errMessage: ''});
+        try {
+            if(manager.toLowerCase() !== accounts[0].toLowerCase()){
+                let error = 'Only the manager can finalize a request';
+                this.setState({errMessage: error});
+                throw new Error('Only the manager can finalize a request');
+            }
+            const requestID = index;
+            await campaign.methods.finalizeRequest(requestID).send({
+                from: accounts[0],
+                to: this.props.recipient
             });
             await Router.reload()
         }catch (err){
@@ -120,10 +143,14 @@ class RequestsIndex extends Component {
                                                     <Button
                                                         color={'green'}
                                                         basic
-                                                        onClick={(e)=>this.onApprove(index)}>Approve</Button>
+                                                        onClick={()=>this.onApprove(index)}
+                                                    >Approve</Button>
                                                 </Table.Cell>
                                                 <Table.Cell>
-                                                    <Button color={'red'} basic>Finalize</Button>
+                                                    <Button color={'red'}
+                                                            basic
+                                                            onClick={()=>this.onFinalize(index)}
+                                                    >Finalize</Button>
                                                 </Table.Cell>
                                             </TableRow>
                                         );

@@ -3,7 +3,7 @@ import Header from '../../../components/Header';
 import {Form, Button, Message, Input} from 'semantic-ui-react';
 import Campaign from '../../../campaign';
 import web3 from '../../../web3';
-import {Router} from '../../../routes';
+import Link, {Router} from '../../../routes';
 
 class RequestNew extends Component {
     state = {
@@ -50,11 +50,15 @@ class RequestNew extends Component {
         }
     }
 
+    routeToCampaign = () => {
+        Link.Router.pushRoute(`/campaigns/${this.props.address}`);
+    }
+
     render() {
         const hasError = !!this.state.errorMessage;
         return (
             <Header>
-                <h1>Campanha {this.props.address}</h1>
+                <h1>Campanha <a onClick={this.routeToCampaign}>{this.props.address}</a></h1>
                 {hasError && <Message error header="Oops!" content={this.state.errorMessage} />}
             <h3>Request New</h3>
                 <Form onSubmit={this.onSubmit}>
