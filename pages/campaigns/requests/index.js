@@ -10,7 +10,10 @@ import web3 from "../../../web3";
 class RequestsIndex extends Component {
 
     state= {
-        requests: []
+        requests: [],
+        id: 0,
+        errMessage: '',
+        loading: false
     }
 
     static async getInitialProps(props) {
@@ -38,6 +41,26 @@ class RequestsIndex extends Component {
 
     routeToCampaign = () => {
         Link.Router.pushRoute(`/campaigns/${this.props.address}`);
+    }
+
+    onApprove = async (index) => {
+        const campaign = Campaign(this.props.address);
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        this.setState({errMessage: '', loading: true});
+        try {
+            if(window.ethereum && accounts[0] == this.props.manager){
+                const requestID = index;
+                await campaign.methods.approveRequest(requestID).send({
+                    from: accounts[0]
+                });
+            }
+            let error = 'Only the manager can approve a request';
+            this.setState({errMessage: error});
+        }catch (err){
+            this.setState({errMessage: err.message, loading: false});
+        }finally {
+            this.setState({loading: false});
+        }
     }
 
     render() {
@@ -85,8 +108,12 @@ class RequestsIndex extends Component {
                                                 <Table.Cell>{web3.utils.fromWei(request.value, 'ether')} eth</Table.Cell>
                                                 <Table.Cell>{request.recipient}</Table.Cell>
                                                 <Table.Cell>{parseInt(request.approvalCount)}/{this.props.approversCount}</Table.Cell>
-                                                <Table.Cell positive={true}>Approve</Table.Cell>
-                                                <Table.Cell negative={true}>Finalize</Table.Cell>
+                                                <Table.Cell>
+                                                    <Button loading={this.state.loading} color={'green'} basic onClick={()=>this.onApprove(index)}>Approve</Button>
+                                                </Table.Cell>
+                                                <Table.Cell>
+                                                    <Button color={'red'} basic>Finalize</Button>
+                                                </Table.Cell>
                                             </TableRow>
                                         );
                                     })}
