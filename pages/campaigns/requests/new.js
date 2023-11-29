@@ -33,9 +33,11 @@ class RequestNew extends Component {
         e.preventDefault();
         const { address, manager } = this.props;
         const { description, value, recipient } = this.state;
+        const campaign = Campaign(address);
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         this.setState({ loading: true, errorMessage: '' })
         try{
-            if(manager !== await web3.eth.getAccounts()[0]){
+            if(!window.ethereum || manager !== await window.ethereum.request({ method: 'eth_requestAccounts' })[0]){
                 const err = 'Only the manager can create a request';
                 this.setState({ loading: false, errorMessage: err, value: '' })
             }
@@ -81,7 +83,7 @@ class RequestNew extends Component {
                             onChange={event => this.setState({recipient: event.target.value})}
                         />
                     </Form.Field>
-                    <Button primary>Submit</Button>
+                    <Button primary loading={this.state.loading}>Submit</Button>
                 </Form>
             </Header>
         );
