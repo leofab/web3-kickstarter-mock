@@ -31,7 +31,12 @@ class RequestsIndex extends Component {
             const request = await campaign.methods.requests(i).call();
             requests.push(request);
         }
+        console.log(requests)
         this.setState({requests});
+    }
+
+    routeToCampaign = () => {
+        Link.Router.pushRoute(`/campaigns/${this.props.address}`);
     }
 
     render() {
@@ -40,7 +45,7 @@ class RequestsIndex extends Component {
                 <Grid>
                     <GridRow>
                         <GridColumn width={14}>
-                            <h3>Requests for Campaign nø  {this.props.address}</h3>
+                            <h3>Requests for Campaign nø  <a onClick={this.routeToCampaign} > {this.props.address}</a></h3>
                         </GridColumn>
                         <GridColumn width={2}>
                             <Button
@@ -63,6 +68,9 @@ class RequestsIndex extends Component {
                                         <Table.HeaderCell>Complete</Table.HeaderCell>
                                         <Table.HeaderCell>Value</Table.HeaderCell>
                                         <Table.HeaderCell>Recipient</Table.HeaderCell>
+                                        <Table.HeaderCell>Approvers</Table.HeaderCell>
+                                        <Table.HeaderCell>Approve</Table.HeaderCell>
+                                        <Table.HeaderCell>Finalize</Table.HeaderCell>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -70,9 +78,12 @@ class RequestsIndex extends Component {
                                         return (
                                             <TableRow key={index}>
                                                 <Table.Cell>{request.description}</Table.Cell>
-                                                <Table.Cell>{request.complete}</Table.Cell>
-                                                <Table.Cell>{web3.utils.fromWei(request.value, 'ether')}</Table.Cell>
+                                                <Table.Cell>{JSON.stringify(request.complete)}</Table.Cell>
+                                                <Table.Cell>{web3.utils.fromWei(request.value, 'ether')} eth</Table.Cell>
                                                 <Table.Cell>{request.recipient}</Table.Cell>
+                                                <Table.Cell>{parseInt(request.approvalCount)}</Table.Cell>
+                                                <Table.Cell positive={true}>Approve</Table.Cell>
+                                                <Table.Cell negative={true}>Finalize</Table.Cell>
                                             </TableRow>
                                         );
                                     })}
