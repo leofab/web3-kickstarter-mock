@@ -132,7 +132,7 @@ class RequestsIndex extends Component {
                                 <TableBody>
                                     {this.state.requests.map((request, index) => {
                                         return (
-                                            <TableRow key={index}>
+                                            <TableRow key={index} disabled={request.complete}>
                                                 <Table.Cell>{index+1}</Table.Cell>
                                                 <Table.Cell>{request.description}</Table.Cell>
                                                 <Table.Cell>{JSON.stringify(request.complete)}</Table.Cell>
@@ -140,17 +140,19 @@ class RequestsIndex extends Component {
                                                 <Table.Cell>{request.recipient}</Table.Cell>
                                                 <Table.Cell>{parseInt(request.approvalCount)}/{this.props.approversCount}</Table.Cell>
                                                 <Table.Cell>
-                                                    <Button
+                                                    {request.complete ? null :
+                                                        (<Button
                                                         color={'green'}
                                                         basic
-                                                        onClick={()=>this.onApprove(index)}
-                                                    >Approve</Button>
+                                                        onClick={() => this.onApprove(index)}
+                                                    >Approve</Button>)}
                                                 </Table.Cell>
                                                 <Table.Cell>
-                                                    <Button color={'red'}
-                                                            basic
-                                                            onClick={()=>this.onFinalize(index)}
-                                                    >Finalize</Button>
+                                                    {request.complete ? null :
+                                                        (<Button color={'red'}
+                                                             basic
+                                                             onClick={() => this.onFinalize(index)}
+                                                    >Finalize</Button>)}
                                                 </Table.Cell>
                                             </TableRow>
                                         );
