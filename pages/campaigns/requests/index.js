@@ -23,6 +23,7 @@ class RequestsIndex extends Component {
         return {
             manager: summary[4],
             approversCount: summary[3].toString(),
+            requestsCount: summary[2].toString(),
             address: address,
             recipient: summary[5]
         };
@@ -132,7 +133,7 @@ class RequestsIndex extends Component {
                                 <TableBody>
                                     {this.state.requests.map((request, index) => {
                                         return (
-                                            <TableRow key={index} disabled={request.complete} positive={parseInt(request.approvalCount)>(this.props.approversCount / 2)}>
+                                            <TableRow key={index} disabled={request.complete} positive={parseInt(request.approvalCount)>(this.props.approversCount / 2) && !request.complete}>
                                                 <Table.Cell>{index+1}</Table.Cell>
                                                 <Table.Cell>{request.description}</Table.Cell>
                                                 <Table.Cell>{JSON.stringify(request.complete)}</Table.Cell>
@@ -159,6 +160,7 @@ class RequestsIndex extends Component {
                                     })}
                                 </TableBody>
                             </Table>
+                            <h3>Found {this.props.requestsCount} requests</h3>
                         </GridColumn>
                     </GridRow>
                 </Grid>
